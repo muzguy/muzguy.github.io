@@ -1,0 +1,405 @@
+/* =========================================================
+   GLASS.CSS — NEXT-GEN CYBER GLASSMORPHISM & SPECULAR EFFECTS
+   muzguy // Rohit — Futuristic Developer Portfolio
+========================================================= */
+
+/* High-tech Glass Panel */
+.glass-panel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.015) 100%);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.12),
+    0 20px 50px rgba(0, 0, 0, 0.45);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glass Card with 3D Tilt & Specular Light */
+.glass-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.012) 100%);
+  backdrop-filter: blur(24px) saturate(170%);
+  -webkit-backdrop-filter: blur(24px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 34px;
+  position: relative;
+  overflow: hidden;
+  transition: 
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    0 15px 40px rgba(0, 0, 0, 0.35);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Ambient Inner Specular Reflection */
+.glass-card::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  left: -80px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  opacity: 0.6;
+}
+
+/* Dynamic Glare Spotlight Effect (controlled via JS tilt coordinates) */
+.glass-card .card-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle 300px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.14), transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+.glass-card:hover .card-glare {
+  opacity: 1;
+}
+
+.glass-card:hover {
+  border-color: var(--accent-glow);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 25px 60px rgba(0, 0, 0, 0.6),
+    0 0 45px var(--accent-glow-secondary);
+}
+
+/* Cyber Corner Brackets */
+.cyber-card {
+  position: relative;
+}
+
+.cyber-card::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 14px;
+  height: 14px;
+  border-top: 2px solid var(--accent-glow);
+  border-right: 2px solid var(--accent-glow);
+  pointer-events: none;
+  transition: all 0.35s ease;
+}
+
+.cyber-card:hover::after {
+  border-color: var(--accent-primary);
+  width: 20px;
+  height: 20px;
+}
+
+/* Floating Futuristic Tech Badges */
+.tech-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 40px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.tech-pill:hover {
+  color: #ffffff;
+  background: var(--accent-badge-bg);
+  border-color: var(--accent-secondary);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 25px var(--accent-glow-secondary);
+}
+
+.tech-pill.active {
+  background: var(--accent-badge-bg);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* Live Status Dot Indicator */
+.status-beacon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #a1a1aa;
+}
+
+.status-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--matrix-green);
+  box-shadow: 0 0 10px var(--matrix-green);
+}
+
+.status-dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--matrix-green);
+  animation: radarPing 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes radarPing {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+/* Futuristic Holographic Shimmer Button */
+.holo-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: 14px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: #ffffff;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.holo-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.75s ease;
+}
+
+.holo-btn:hover::before {
+  left: 140%;
+}
+
+.holo-btn:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.5), 0 0 25px var(--accent-glow-secondary);
+}
+
+.holo-btn-primary {
+  background: #ffffff;
+  color: #05050a;
+  border-color: #ffffff;
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.25);
+}
+
+.holo-btn-primary:hover {
+  background: #f0f0f5;
+  box-shadow: 0 16px 45px rgba(255, 255, 255, 0.35), 0 0 30px var(--accent-glow);
+  color: #000000;
+}
+
+.holo-btn-cyan {
+  background: var(--accent-badge-bg);
+  border-color: var(--accent-badge-border);
+  color: var(--accent-primary);
+}
+
+.holo-btn-cyan:hover {
+  background: var(--accent-glow);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 30px var(--accent-glow);
+  color: #ffffff;
+}
+
+/* =========================================================
+   LIGHT MODE GLASS & COMPONENT ADAPTATIONS
+========================================================= */
+[data-mode="light"] .glass-panel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.85) 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 1),
+    0 15px 35px rgba(15, 23, 42, 0.06);
+}
+
+[data-mode="light"] .glass-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 250, 252, 0.88) 100%);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 12px 35px rgba(15, 23, 42, 0.06);
+}
+
+[data-mode="light"] .glass-card:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 20px 45px rgba(15, 23, 42, 0.12),
+    0 0 35px var(--accent-glow);
+}
+
+[data-mode="light"] .glass-card::before {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, transparent 70%);
+}
+
+[data-mode="light"] .cyber-card::after {
+  border-top: 2px solid var(--accent-primary);
+  border-right: 2px solid var(--accent-primary);
+  opacity: 0.9;
+}
+
+[data-mode="light"] .tech-pill {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  color: #1e293b;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+[data-mode="light"] .tech-pill:hover {
+  color: #090d16;
+  background: var(--accent-badge-bg);
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+[data-mode="light"] .tech-pill.active {
+  background: var(--accent-badge-bg);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+
+[data-mode="light"] .status-beacon {
+  color: #334155;
+  font-weight: 600;
+}
+
+[data-mode="light"] .status-dot {
+  background: #059669;
+  box-shadow: 0 0 10px rgba(5, 150, 105, 0.6);
+}
+
+[data-mode="light"] .status-dot::after {
+  border-color: #059669;
+}
+
+[data-mode="light"] .holo-btn {
+  background: rgba(255, 255, 255, 0.95);
+  color: #090d16;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.06);
+  font-weight: 600;
+}
+
+[data-mode="light"] .holo-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.1), 0 0 20px var(--accent-glow);
+}
+
+[data-mode="light"] .holo-btn-primary {
+  background: #090d16;
+  color: #ffffff;
+  border-color: #090d16;
+  box-shadow: 0 8px 25px rgba(9, 13, 22, 0.25);
+}
+
+[data-mode="light"] .holo-btn-primary:hover {
+  background: #1e293b;
+  color: #ffffff;
+  border-color: #1e293b;
+  box-shadow: 0 12px 35px rgba(9, 13, 22, 0.35), 0 0 25px var(--accent-glow);
+}
+
+[data-mode="light"] .holo-btn-cyan {
+  background: var(--accent-badge-bg);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+[data-mode="light"] .holo-btn-cyan:hover {
+  background: var(--accent-primary);
+  color: #ffffff;
+  border-color: var(--accent-primary);
+  box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+/* =========================================================
+   RESPONSIVE & TOUCH OPTIMIZATIONS
+========================================================= */
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  .tech-pill {
+    padding: 6px 12px;
+    font-size: 0.74rem;
+  }
+
+  .holo-btn {
+    padding: 12px 20px;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .glass-card {
+    padding: 18px 14px;
+    border-radius: 16px;
+  }
+
+  .tech-pill {
+    padding: 5px 10px;
+    font-size: 0.7rem;
+    gap: 5px;
+  }
+}
+
+/* Touch Device Interaction Overrides */
+@media (hover: none) and (pointer: coarse) {
+  .glass-card:hover,
+  .tech-pill:hover,
+  .holo-btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .glass-card:active,
+  .tech-pill:active,
+  .holo-btn:active {
+    transform: scale(0.98);
+  }
+}
