@@ -93,12 +93,12 @@ class WebGLBackground {
     this.particles = null;
     this.lineMesh = null;
 
-    const isMobile = window.innerWidth < 768;
-    const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
-    this.particleCount = isMobile ? 42 : (isTablet ? 85 : 160);
+    const config = this.getResponsiveConfig();
+    this.particleCount = config.count;
+    this.bounds = config.bounds;
+    this.maxDistance = config.maxDistance;
     this.particlePositions = null;
     this.particleVelocities = [];
-    this.maxDistance = isMobile ? 105 : 140;
 
     this.mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
     this.scrollProgress = 0;
@@ -114,6 +114,35 @@ class WebGLBackground {
     this.activeLineColor2 = { r: 0.55, g: 0.36, b: 0.96 };
 
     this.init();
+  }
+
+  getResponsiveConfig() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const isMobile = width < 768;
+    const isTablet = width >= 768 && width < 1024;
+
+    const cameraZ = 650;
+    const vFOV = (60 * Math.PI) / 180;
+    const visibleHeight = 2 * Math.tan(vFOV / 2) * cameraZ;
+    const visibleWidth = visibleHeight * (width / height);
+
+    // Responsive particle count: fewer on mobile, but all guaranteed inside visible viewport
+    const count = isMobile ? 55 : (isTablet ? 95 : 155);
+
+    // Dynamic bounds matching exact viewport dimensions with safe perimeter margin
+    const bounds = {
+      x: visibleWidth * 0.54,
+      y: visibleHeight * 0.54,
+      z: 220
+    };
+
+    // Connection distance scales naturally with viewport width on mobile
+    const maxDistance = isMobile
+      ? Math.max(85, Math.min(visibleWidth * 0.28, 105))
+      : 135;
+
+    return { isMobile, isTablet, count, bounds, maxDistance, visibleWidth, visibleHeight };
   }
 
   init() {
@@ -148,27 +177,39 @@ class WebGLBackground {
     // 5. Bind events
     this.bindEvents();
 
-    // 6. Start Render Loop
-    this.render();
+    // 6. Start Render Loop (unless user prefers reduced motion)
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.renderer.render(this.scene, this.camera);
+    } else {
+      this.render();
+    }
   }
 
   createParticles() {
+    const config = this.getResponsiveConfig();
+    this.particleCount = config.count;
+    this.bounds = config.bounds;
+    this.maxDistance = config.maxDistance;
+
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(this.particleCount * 3);
     const colors = new Float32Array(this.particleCount * 3);
+    this.particleVelocities = [];
 
-    const bounds = 800;
+    const isLight = this.currentMode === 'light';
+
     for (let i = 0; i < this.particleCount; i++) {
       const i3 = i * 3;
-      positions[i3] = (Math.random() - 0.5) * bounds * 1.5;
-      positions[i3 + 1] = (Math.random() - 0.5) * bounds;
-      positions[i3 + 2] = (Math.random() - 0.5) * bounds;
+      positions[i3] = (Math.random() - 0.5) * 2 * this.bounds.x;
+      positions[i3 + 1] = (Math.random() - 0.5) * 2 * this.bounds.y;
+      positions[i3 + 2] = (Math.random() - 0.5) * 2 * this.bounds.z;
 
-      // Random velocities
+      // Gentle responsive velocities
+      const speedFactor = config.isMobile ? 0.30 : 0.42;
       this.particleVelocities.push({
-        x: (Math.random() - 0.5) * 0.45,
-        y: (Math.random() - 0.5) * 0.45,
-        z: (Math.random() - 0.5) * 0.45
+        x: (Math.random() - 0.5) * speedFactor,
+        y: (Math.random() - 0.5) * speedFactor,
+        z: (Math.random() - 0.5) * speedFactor * 0.6
       });
 
       colors[i3] = 0.0;
@@ -183,13 +224,17 @@ class WebGLBackground {
     // Glowing particle texture
     const particleTexture = this.generateParticleTexture();
 
+    const particleSize = config.isMobile 
+      ? (isLight ? 3.5 : 3.2)
+      : (isLight ? 4.8 : 4.2);
+
     const particleMaterial = new THREE.PointsMaterial({
-      size: 4.5,
+      size: particleSize,
       map: particleTexture,
       transparent: true,
-      opacity: 0.85,
+      opacity: isLight ? 0.88 : 0.82,
       vertexColors: true,
-      blending: THREE.AdditiveBlending,
+      blending: isLight ? THREE.NormalBlending : THREE.AdditiveBlending,
       depthWrite: false
     });
 
@@ -197,19 +242,19 @@ class WebGLBackground {
     this.scene.add(this.particles);
 
     // Dynamic Line Mesh connecting nearby nodes
-    const lineGeometry = new THREE.BufferGeometry();
     const maxLineSegments = (this.particleCount * (this.particleCount - 1)) / 2;
     const linePositions = new Float32Array(maxLineSegments * 6);
     const lineColors = new Float32Array(maxLineSegments * 6);
 
+    const lineGeometry = new THREE.BufferGeometry();
     lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3).setUsage(THREE.DynamicDrawUsage));
     lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3).setUsage(THREE.DynamicDrawUsage));
 
     const lineMaterial = new THREE.LineBasicMaterial({
       vertexColors: true,
       transparent: true,
-      opacity: 0.22,
-      blending: THREE.AdditiveBlending,
+      opacity: isLight ? 0.26 : 0.20,
+      blending: isLight ? THREE.NormalBlending : THREE.AdditiveBlending,
       depthWrite: false
     });
 
@@ -238,6 +283,7 @@ class WebGLBackground {
 
   bindEvents() {
     window.addEventListener('resize', () => this.onResize(), { passive: true });
+    window.addEventListener('orientationchange', () => setTimeout(() => this.onResize(), 100), { passive: true });
 
     window.addEventListener('mousemove', (e) => {
       this.mouse.targetX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -247,8 +293,8 @@ class WebGLBackground {
     // Touch interaction for mobile devices
     window.addEventListener('touchmove', (e) => {
       if (e.touches && e.touches[0]) {
-        this.mouse.targetX = (e.touches[0].clientX / window.innerWidth - 0.5) * 1.8;
-        this.mouse.targetY = -(e.touches[0].clientY / window.innerHeight - 0.5) * 1.8;
+        this.mouse.targetX = (e.touches[0].clientX / window.innerWidth - 0.5) * 1.5;
+        this.mouse.targetY = -(e.touches[0].clientY / window.innerHeight - 0.5) * 1.5;
       }
     }, { passive: true });
 
@@ -269,15 +315,47 @@ class WebGLBackground {
         this.resume();
       }
     });
+
+    // Respect prefers-reduced-motion changes dynamically
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    motionQuery.addEventListener('change', () => {
+      if (motionQuery.matches) {
+        this.pause();
+      } else {
+        this.resume();
+      }
+    });
   }
 
   onResize() {
     if (!this.camera || !this.renderer) return;
-    const isMobile = window.innerWidth < 768;
-    this.camera.aspect = window.innerWidth / window.innerHeight;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const isMobile = width < 768;
+
+    this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
+
+    const config = this.getResponsiveConfig();
+    this.bounds = config.bounds;
+    this.maxDistance = config.maxDistance;
+
+    // Rescale out-of-bounds particles immediately so constellation stays full on mobile
+    if (this.particles && this.particlePositions) {
+      const positions = this.particles.geometry.attributes.position.array;
+      for (let i = 0; i < this.particleCount; i++) {
+        const i3 = i * 3;
+        if (Math.abs(positions[i3]) > this.bounds.x) {
+          positions[i3] = (Math.random() - 0.5) * 2 * this.bounds.x;
+        }
+        if (Math.abs(positions[i3 + 1]) > this.bounds.y) {
+          positions[i3 + 1] = (Math.random() - 0.5) * 2 * this.bounds.y;
+        }
+      }
+      this.particles.geometry.attributes.position.needsUpdate = true;
+    }
   }
 
   render() {
@@ -306,7 +384,6 @@ class WebGLBackground {
       const lineColors = this.lineMesh.geometry.attributes.color.array;
 
       let lineVertexCount = 0;
-      const bounds = 800;
 
       for (let i = 0; i < this.particleCount; i++) {
         const i3 = i * 3;
@@ -316,10 +393,10 @@ class WebGLBackground {
         positions[i3 + 1] += this.particleVelocities[i].y;
         positions[i3 + 2] += this.particleVelocities[i].z;
 
-        // Bounce back if out of bounds
-        if (Math.abs(positions[i3]) > bounds * 0.8) this.particleVelocities[i].x *= -1;
-        if (Math.abs(positions[i3 + 1]) > bounds * 0.5) this.particleVelocities[i].y *= -1;
-        if (Math.abs(positions[i3 + 2]) > bounds * 0.5) this.particleVelocities[i].z *= -1;
+        // Bounce back within dynamic responsive bounds
+        if (Math.abs(positions[i3]) > this.bounds.x) this.particleVelocities[i].x *= -1;
+        if (Math.abs(positions[i3 + 1]) > this.bounds.y) this.particleVelocities[i].y *= -1;
+        if (Math.abs(positions[i3 + 2]) > this.bounds.z) this.particleVelocities[i].z *= -1;
 
         // Connect lines between nearby nodes
         for (let j = i + 1; j < this.particleCount; j++) {
@@ -378,15 +455,16 @@ class WebGLBackground {
     this.activeLineColor2 = isLight ? paletteObj.lineLight2 : paletteObj.line2;
 
     // Adapt material blending and opacity for crisp contrast in light mode
+    const isMobile = window.innerWidth < 768;
     if (this.particles && this.particles.material) {
       if (isLight) {
         this.particles.material.blending = THREE.NormalBlending;
         this.particles.material.opacity = 0.9;
-        this.particles.material.size = 5.0;
+        this.particles.material.size = isMobile ? 3.5 : 4.8;
       } else {
         this.particles.material.blending = THREE.AdditiveBlending;
         this.particles.material.opacity = 0.85;
-        this.particles.material.size = 4.5;
+        this.particles.material.size = isMobile ? 3.2 : 4.2;
       }
       this.particles.material.needsUpdate = true;
     }

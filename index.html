@@ -41,24 +41,31 @@
   </div>
 
   <!-- =========================================================
-       CINEMATIC BACKGROUND LAYERS (PERMANENT 3D WEBGL)
+       CINEMATIC BACKGROUND LAYERS
+       Dark Mode: Deep Space Cosmic Lab with Multi-layer Starfield
+       Light Mode: Premium Technical Paper & Engineering Grid
   ========================================================= -->
+  <!-- Multi-Layer Cosmic Starfield & Meteor (Dark Mode) -->
+  <div class="cosmic-stars-layer stars-deep" aria-hidden="true"></div>
+  <div class="cosmic-stars-layer stars-mid" aria-hidden="true"></div>
+  <div class="cosmic-meteor" aria-hidden="true"></div>
+
   <!-- Interactive Three.js WebGL Particle Constellation -->
   <div id="bg-canvas-container">
     <canvas id="three-canvas"></canvas>
   </div>
 
-  <!-- Gradient Vignette & Cyber Grid Ground -->
-  <div class="video-overlay"></div>
-  <div class="cyber-grid"></div>
+  <!-- Gradient Vignette & Cyber Grid Ground / Technical Paper Grid -->
+  <div class="video-overlay" aria-hidden="true"></div>
+  <div class="cyber-grid" aria-hidden="true"></div>
 
-  <!-- 4. Ambient Floating Glow Orbs -->
-  <div class="ambient-glow primary"></div>
-  <div class="ambient-glow secondary"></div>
-  <div class="ambient-glow accent"></div>
+  <!-- Ambient Floating Glow Orbs (Cosmic Nebulae / Soft Paper Atmosphere) -->
+  <div class="ambient-glow primary" aria-hidden="true"></div>
+  <div class="ambient-glow secondary" aria-hidden="true"></div>
+  <div class="ambient-glow accent" aria-hidden="true"></div>
 
-  <!-- 5. Grain Scanline Filter -->
-  <div class="grain-overlay"></div>
+  <!-- Tactile Paper & Cosmic Grain Filter -->
+  <div class="grain-overlay" aria-hidden="true"></div>
 
   <!-- =========================================================
        CYBER HUD NAVBAR
