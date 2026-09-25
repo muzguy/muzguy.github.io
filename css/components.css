@@ -1516,18 +1516,20 @@ footer {
 }
 
 /* 3. Section Headers & Dividers */
+[data-mode="light"] .section-header .section-label,
 [data-mode="light"] .section-label {
-  background: var(--accent-badge-bg);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.16) 55%, var(--accent-badge-bg) 100%);
+  background-color: var(--accent-badge-bg);
   border: 1px solid var(--accent-badge-border);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
   color: #020617;
   font-weight: 700;
   letter-spacing: 2.5px;
   box-shadow: 
     inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    0 2px 8px rgba(15, 23, 42, 0.04);
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+    0 2px 8px var(--accent-badge-bg);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 [data-mode="light"] .section-label::before {
