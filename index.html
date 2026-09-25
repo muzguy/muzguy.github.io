@@ -310,11 +310,51 @@
       </div>
 
       <div class="projects-grid">
-        <!-- Project 1: Campus Hub -->
+        <!-- Project 1: ASAPTools -->
+        <div class="glass-card cyber-card project-card asaptools-card" 
+             id="asaptoolsProjectCard"
+             tabindex="0"
+             role="link"
+             aria-label="ASAPTools — Digital utility platform for PDFs, images, developers, and AI workflows"
+             onclick="if (!event.target.closest('a')) { window.open('https://asaptools.in', '_blank', 'noopener,noreferrer'); }"
+             onkeydown="if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('a')) { event.preventDefault(); window.open('https://asaptools.in', '_blank', 'noopener,noreferrer'); }">
+          <div class="project-top">
+            <div class="project-meta">
+              <span class="project-index">01 // UTILITY PLATFORM</span>
+              <span class="project-badge" style="color: var(--accent-tertiary); border-color: var(--accent-badge-border); background: var(--accent-badge-bg);">LIVE NOW</span>
+            </div>
+            <h3 class="project-title">
+              <a href="https://asaptools.in" target="_blank" rel="noopener noreferrer" class="project-title-link">
+                <img src="assets/asaptools-icon.png" alt="ASAPTools Logo" class="project-card-icon">
+                <span>ASAPTools</span>
+              </a>
+            </h3>
+            <p class="project-desc">
+              A comprehensive digital utility platform I built where users can quickly use tools for PDFs, images, developers, text, calculators, and AI-powered workflows.
+            </p>
+          </div>
+
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="project-tag">Web Platform</span>
+              <span class="project-tag">Developer Tools</span>
+              <span class="project-tag">PDF &amp; Media</span>
+              <span class="project-tag">AI Workflows</span>
+            </div>
+            <div class="project-links">
+              <a href="https://asaptools.in" target="_blank" rel="noopener noreferrer" class="project-action-link" id="asaptoolsActionLink">
+                <span>Launch ASAPTools</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2: Campus Hub -->
         <div class="glass-card cyber-card project-card">
           <div class="project-top">
             <div class="project-meta">
-              <span class="project-index">01 // PLATFORM</span>
+              <span class="project-index">02 // PLATFORM</span>
               <span class="project-badge">ACTIVE</span>
             </div>
             <h3 class="project-title">Campus Hub</h3>
@@ -340,11 +380,11 @@
           </div>
         </div>
 
-        <!-- Project 2: AI Lab -->
+        <!-- Project 3: AI Lab -->
         <div class="glass-card cyber-card project-card">
           <div class="project-top">
             <div class="project-meta">
-              <span class="project-index">02 // RESEARCH</span>
+              <span class="project-index">03 // RESEARCH</span>
               <span class="project-badge" style="color: var(--accent-secondary); border-color: var(--accent-badge-border); background: var(--accent-badge-bg);">INTELLIGENCE</span>
             </div>
             <h3 class="project-title">AI Lab</h3>
@@ -366,34 +406,6 @@
                 <span>View Lab</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project 3: Next Horizon -->
-        <div class="glass-card cyber-card project-card">
-          <div class="project-top">
-            <div class="project-meta">
-              <span class="project-index">03 // HORIZON</span>
-              <span class="project-badge" style="color: var(--accent-tertiary); border-color: var(--accent-badge-border); background: var(--accent-badge-bg);">IN DEVELOPMENT</span>
-            </div>
-            <h3 class="project-title">Next Horizon</h3>
-            <p class="project-desc">
-              Novel software tools, dynamic user interfaces, and exploratory experiments currently 
-              being brewed in the lab.
-            </p>
-          </div>
-
-          <div class="project-footer">
-            <div class="project-tags">
-              <span class="project-tag">Ideate</span>
-              <span class="project-tag">Prototype</span>
-              <span class="project-tag">Ship</span>
-            </div>
-            <div class="project-links">
-              <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);">
-                Continuous Deployment
-              </span>
             </div>
           </div>
         </div>
