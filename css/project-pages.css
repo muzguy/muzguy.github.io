@@ -1017,24 +1017,96 @@
 
 @media (max-width: 768px) {
   .project-navbar-wrapper {
-    top: max(14px, env(safe-area-inset-top, 14px));
-    padding: 0 14px;
+    top: max(10px, env(safe-area-inset-top, 10px));
+    padding: 0 12px;
+    width: 100%;
+    box-sizing: border-box;
   }
   .project-navbar {
-    padding: 8px 14px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 10px;
+    padding: 8px 12px;
+    border-radius: 16px;
+    box-sizing: border-box;
+  }
+  .project-nav-left {
+    order: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .project-nav-brand {
+    font-size: 1.15rem;
   }
   .project-breadcrumbs {
     display: none;
   }
-  .project-switcher-btn {
-    font-size: 0.68rem;
-    padding: 4px 8px;
+  .project-nav-actions {
+    order: 2;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+  .nav-back-link {
+    padding: 5px 8px;
+    font-size: 0.72rem;
+    gap: 4px;
   }
   .nav-back-link span {
     display: none;
   }
+  .nav-back-link svg {
+    width: 15px;
+    height: 15px;
+  }
+  .audio-toggle-btn,
+  .theme-mode-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .nav-launch-btn {
+    padding: 5px 11px;
+    font-size: 0.72rem;
+    border-radius: 8px;
+    gap: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .project-switcher {
+    order: 3;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    padding: 3px;
+    border-radius: 10px;
+    margin-top: 2px;
+    box-sizing: border-box;
+  }
+  .project-switcher-btn {
+    flex: 1;
+    font-size: 0.72rem;
+    padding: 6px 8px;
+    justify-content: center;
+    text-align: center;
+    border-radius: 7px;
+    white-space: nowrap;
+  }
   .project-hero {
-    padding: 110px 0 40px;
+    padding: 130px 0 40px;
   }
   .project-hero-icon,
   .project-hero-logo-box {
