@@ -1086,3 +1086,99 @@
     margin: 40px 0 60px;
   }
 }
+
+/* =========================================================
+   LIGHT MODE READABILITY & FROSTED TEXT SURFACES
+   Subtle transparent frosted surfaces behind floating body
+   text groups over the cosmic canvas (Light Mode only).
+========================================================= */
+
+/* 1. Project Hero Supporting Description */
+[data-mode="light"] .project-hero-desc {
+  background: rgba(255, 255, 255, 0.36);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 16px;
+  padding: 18px 24px;
+  color: #0f172a;
+  font-weight: 500;
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+[data-mode="light"] .project-hero-subtitle {
+  color: #020617;
+  font-weight: 600;
+}
+
+/* 2. Section Explanatory Paragraphs */
+[data-mode="light"] .dossier-desc {
+  background: rgba(255, 255, 255, 0.32);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  padding: 14px 20px;
+  color: #1e293b;
+  font-weight: 500;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* 3. High-Contrast Light Mode Text Inside Existing Glass Cards */
+[data-mode="light"] .principle-desc,
+[data-mode="light"] .category-desc,
+[data-mode="light"] .stage-desc-text,
+[data-mode="light"] .dna-signal-desc,
+[data-mode="light"] .roadmap-text,
+[data-mode="light"] .cta-banner-sub {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+[data-mode="light"] .principle-title,
+[data-mode="light"] .category-name,
+[data-mode="light"] .stage-title-text,
+[data-mode="light"] .dna-signal-name,
+[data-mode="light"] .roadmap-title,
+[data-mode="light"] .vector-title {
+  color: #020617;
+}
+
+[data-mode="light"] .meta-hud-val {
+  color: #020617;
+}
+
+[data-mode="light"] .meta-hud-label {
+  color: #475569;
+  font-weight: 600;
+}
+
+[data-mode="light"] .ai-roadmap-text {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+[data-mode="light"] .node-title {
+  color: #020617;
+}
+
+[data-mode="light"] .node-tag {
+  color: #475569;
+  font-weight: 600;
+}
+
+/* Mobile Frosted Padding Tuning */
+@media (max-width: 768px) {
+  [data-mode="light"] .project-hero-desc {
+    padding: 14px 18px;
+    border-radius: 14px;
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+  [data-mode="light"] .dossier-desc {
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+}
