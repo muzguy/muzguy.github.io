@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="webgl" data-mode="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="NEXUS AI Case Study — Autonomous 7-stage brand strategy, identity synthesis, and consistency governance studio. Built by Rohit (muzguy).">
+  <meta name="theme-color" content="#030307">
+  
+  <title>NEXUS — AI Brand Intelligence Dossier | muzguy</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+
+  <!-- Instant Theme & Mode Pre-hydration (Prevents FOUT) -->
+  <script>
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem('muzguy_theme');
+        if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+        const savedMode = localStorage.getItem('muzguy_mode');
+        if (savedMode) document.documentElement.setAttribute('data-mode', savedMode);
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Modern Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/glass.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/project-pages.css">
+</head>
+
+<body>
+  <!-- Custom Dual-Stage Cursor -->
+  <div id="custom-cursor-dot"></div>
+  <div id="custom-cursor-ring">
+    <span class="cursor-label">VIEW</span>
+  </div>
+
+  <!-- Cinematic Background Layers -->
+  <div class="cosmic-stars-layer stars-deep" aria-hidden="true"></div>
+  <div class="cosmic-stars-layer stars-mid" aria-hidden="true"></div>
+  <div class="cosmic-meteor" aria-hidden="true"></div>
+
+  <!-- Interactive Three.js WebGL Particle Constellation -->
+  <div id="bg-canvas-container">
+    <canvas id="three-canvas"></canvas>
+  </div>
+
+  <!-- Gradient Vignette & Cyber Grid Ground -->
+  <div class="video-overlay" aria-hidden="true"></div>
+  <div class="cyber-grid" aria-hidden="true"></div>
+
+  <!-- Ambient Floating Glow Orbs -->
+  <div class="ambient-glow primary" aria-hidden="true"></div>
+  <div class="ambient-glow secondary" aria-hidden="true"></div>
+  <div class="ambient-glow accent" aria-hidden="true"></div>
+
+  <!-- Tactile Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- =========================================================
+       PROJECT HUD NAVBAR
+  ========================================================= -->
+  <div class="project-navbar-wrapper">
+    <nav class="project-navbar" id="hudNav">
+      <div class="project-nav-left">
+        <a href="../../#projects" class="project-nav-brand">
+          <span>muz</span>guy.
+        </a>
+        <div class="project-breadcrumbs">
+          <span>projects</span>
+          <span class="breadcrumb-sep">//</span>
+          <span class="breadcrumb-active">nexus</span>
+        </div>
+      </div>
+
+      <!-- Project Switcher -->
+      <div class="project-switcher" role="tablist" aria-label="Project Switcher">
+        <a href="../asaptools/" class="project-switcher-btn" role="tab" aria-selected="false">
+          <span>⚡ ASAPTools</span>
+        </a>
+        <a href="../nexus/" class="project-switcher-btn active" role="tab" aria-selected="true">
+          <span>🧠 NEXUS</span>
+        </a>
+      </div>
+
+      <div class="project-nav-actions">
+        <a href="../../#projects" class="nav-back-link" title="Return to Overview">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <span>Overview</span>
+        </a>
+
+        <!-- Audio SFX Toggle -->
+        <button class="audio-toggle-btn" id="audioToggle" aria-label="Toggle UI Sound Synthesis" title="Toggle Sound FX">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+        </button>
+
+        <!-- Light / Dark Mode Toggle -->
+        <button class="theme-mode-btn" id="themeModeToggle" aria-label="Toggle Display Mode" title="Toggle Light/Dark Mode">
+          <svg class="mode-icon icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="mode-icon icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+
+        <!-- Launch App CTA -->
+        <a href="https://nexus-ai.muzguy.in" target="_blank" rel="noopener noreferrer" class="nav-launch-btn">
+          <span>Launch NEXUS</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- =========================================================
+       MAIN DOSSIER CONTENT
+  ========================================================= -->
+  <main class="project-container">
+    <!-- HERO SECTION -->
+    <section class="project-hero reveal">
+      <div class="project-hero-badge-row">
+        <span class="project-system-id">02 // AI BRAND INTELLIGENCE</span>
+        <span class="project-status-pill live">● LIVE DEPLOYMENT</span>
+        <span class="project-status-pill">7 STAGES</span>
+        <span class="project-status-pill">GEMINI + GROQ</span>
+        <span class="project-status-pill">AI SYSTEM</span>
+      </div>
+
+      <div class="project-hero-title-wrap">
+        <div class="project-hero-logo-box">NX</div>
+        <h1 class="project-hero-title">
+          NEXUS<span class="gradient-text">.ai</span>
+        </h1>
+      </div>
+
+      <div class="project-hero-subtitle">
+        &ldquo;From raw idea to structured brand intelligence.&rdquo;
+      </div>
+
+      <p class="project-hero-desc">
+        A comprehensive seven-stage autonomous AI brand strategy, identity synthesis, and consistency governance studio. Built to transform loose concept drafts into production-ready positioning, visual briefs, voice guardrails, and launch kits with full explainability.
+      </p>
+
+      <div class="project-hero-actions">
+        <a href="https://nexus-ai.muzguy.in" target="_blank" rel="noopener noreferrer" class="btn-primary-launch">
+          <span>Launch NEXUS Studio</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+        <a href="https://github.com/muzguy/nexus-ai" target="_blank" rel="noopener noreferrer" class="btn-secondary-source">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          <span>View Source</span>
+        </a>
+      </div>
+
+      <!-- Metadata HUD Bar -->
+      <div class="project-meta-hud">
+        <div class="meta-hud-item">
+          <span class="meta-hud-label">// Architecture</span>
+          <span class="meta-hud-val">7-Stage Resilient Pipeline</span>
+        </div>
+        <div class="meta-hud-item">
+          <span class="meta-hud-label">// Primary AI Model</span>
+          <span class="meta-hud-val">Google Gemini 2.5 Flash</span>
+        </div>
+        <div class="meta-hud-item">
+          <span class="meta-hud-label">// Failover Engine</span>
+          <span class="meta-hud-val">Groq (Llama-3.3-70b)</span>
+        </div>
+        <div class="meta-hud-item">
+          <span class="meta-hud-label">// Deployment</span>
+          <span class="meta-hud-val">Vercel (nexus-ai.muzguy.in)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: THE 7-STAGE PIPELINE (CENTERPIECE) -->
+    <section class="dossier-section reveal">
+      <div class="dossier-header">
+        <div class="dossier-tag">01 — The Core Engine</div>
+        <h2 class="dossier-title">
+          Seven-Stage Autonomous <br>
+          <span class="gradient-text">Brand Intelligence Pipeline.</span>
+        </h2>
+        <p class="dossier-desc">
+          NEXUS operates as a deterministic, sequential state machine. Each stage consumes verified outputs from preceding stages to synthesize progressively deeper strategy artifacts.
+        </p>
+      </div>
+
+      <div class="nexus-pipeline-list">
+        <!-- Stage 1 -->
+        <div class="glass-card cyber-card pipeline-stage-card">
+          <div class="stage-step-num">01</div>
+          <div class="stage-title-block">
+            <h3 class="stage-title-text">Discover</h3>
+            <span class="stage-tagline">// Foundational Intelligence</span>
+          </div>
+          <p class="stage-desc-text">
+            Deconstructs raw ideas into primary audience segments, urgent pain points, core problems, operational constraints, and critical open questions.
+          </p>
+          <div class="stage-output-chip">Output: DiscoveryData Schema</div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="glass-card cyber-card pipeline-stage-card">
+          <div class="stage-step-num">02</div>
+          <div class="stage-title-block">
+            <h3 class="stage-title-text">Position</h3>
+            <span class="stage-tagline">// Strategic Divergence</span>
+          </div>
+          <p class="stage-desc-text">
+            Synthesizes 3 radically divergent, defensible market positioning directions with explicit value propositions, archetypes, and strategic trade-offs.
+          </p>
+          <div class="stage-output-chip">Output: 3-Vector Position Matrix</div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="glass-card cyber-card pipeline-stage-card">
+          <div class="stage-step-num">03</div>
+          <div class="stage-title-block">
+            <h3 class="stage-title-text">Challenge &amp; Select</h3>
+            <span class="stage-tagline">// Adversarial Stress-Test</span>
+          </div>
+          <p class="stage-desc-text">
+            Conducts an adversarial "Brand Battle" analyzing cliché vulnerabilities, market risks, and audience fit before the human locks in the winning strategic vector.
+          </p>
+          <div class="stage-output-chip">Output: Locked Strategic Direction</div>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="glass-card cyber-card pipeline-stage-card">
+          <div class="stage-step-num">04</div>
+          <div class="stage-title-block">
+            <h3 class="stage-title-text">Shape</h3>
+            <span class="stage-tagline">// Brand Identity &amp; Persona</span>
+          </div>
+          <p class="stage-desc-text">
+            Forges personality archetypes, behavioral traits, 5 categorized naming candidates with rationale/availability, taglines, one-line pitch, and voice rules.
+          </p>
+          <div class="stage-output-chip">Output: ShapeData &amp; Voice Rules</div>
+        </div>
+
+        <!-- Stage 5 -->
+        <div class="glass-card cyber-card pipeline-stage-card">
+          <div class="stage-step-num">05</div>
+          <div class="stage-title-block">
+            <h3 class="stage-title-text">Visualize</h3>
+            <span class="stage-tagline">// Visual Design Brief</span>
+          </div>
+          <p class="stage-desc-text">
+            Generates an executive design brief with named color mood palettes (hex tokens for primary, secondary, accent, surface), typography pairings, and imagery principles.
+          </p>
+          <div class="stage-output-chip">Output: VisualDirection Brief</div>
+        </div>
+
+        <!-- Stage 6 -->
+        <div class="glass-card cyber-card pipeline-stage-card">
+          <div class="stage-step-num">06</div>
+          <div class="stage-title-block">
+            <h3 class="stage-title-text">Consistency Guardian</h3>
+            <span class="stage-tagline">// System Alignment Audit</span>
+          </div>
+          <p class="stage-desc-text">
+            Runs automated 5-dimension integrity scoring (0–100 score, PASS/FLAG/FAIL verdict), flags strategic drift, and audits arbitrary draft copy in a live sandbox.
+          </p>
+          <div class="stage-output-chip">Output: 5D Consistency Report</div>
+        </div>
+
+        <!-- Stage 7 -->
+        <div class="glass-card cyber-card pipeline-stage-card">
+          <div class="stage-step-num">07</div>
+          <div class="stage-title-block">
+            <h3 class="stage-title-text">Launch Kit</h3>
+            <span class="stage-tagline">// Go-To-Market Assets</span>
+          </div>
+          <p class="stage-desc-text">
+            Assembles launch-ready landing page hero copy, multi-channel social campaign decks (Twitter/X, LinkedIn, Product Hunt hooks), and an actionable launch checklist.
+          </p>
+          <div class="stage-output-chip">Output: LaunchKit + JSON Export</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: BRAND BATTLE -->
+    <section class="dossier-section reveal">
+      <div class="dossier-header">
+        <div class="dossier-tag">02 — Strategic Decision Making</div>
+        <h2 class="dossier-title">
+          Brand Battle &amp; <br>
+          <span class="gradient-text">Human-in-the-Loop Selection.</span>
+        </h2>
+        <p class="dossier-desc">
+          Unlike black-box AI tools that output a single generic recommendation, NEXUS forces strategic divergence in Stage 2, generating 3 competing vectors and subjecting them to adversarial critique in Stage 3. The human strategist retains full agency over the winning direction.
+        </p>
+      </div>
+
+      <div class="brand-battle-grid">
+        <div class="glass-card cyber-card vector-card">
+          <div>
+            <div class="vector-header">
+              <span class="vector-tag">VECTOR A // HIGH UTILITY</span>
+              <h3 class="vector-title">The Friction Slayer</h3>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+              Focuses purely on developer efficiency, raw speed, and zero latency. Strips out emotional marketing in favor of technical benchmarks.
+            </p>
+          </div>
+          <div class="vector-tradeoff-box">
+            <strong>Sacrifice:</strong> High-touch enterprise prestige.<br>
+            <strong>Wins:</strong> Rapid organic developer adoption.
+          </div>
+        </div>
+
+        <div class="glass-card cyber-card vector-card">
+          <div>
+            <div class="vector-header">
+              <span class="vector-tag">VECTOR B // CATEGORY CREATOR</span>
+              <h3 class="vector-title">The Autonomous Foundry</h3>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+              Positions the system as a generational shift toward autonomous AI governance, targeting visionary founders and enterprise innovation labs.
+            </p>
+          </div>
+          <div class="vector-tradeoff-box">
+            <strong>Sacrifice:</strong> Casual low-tier freemium users.<br>
+            <strong>Wins:</strong> Premium enterprise pricing power.
+          </div>
+        </div>
+
+        <div class="glass-card cyber-card vector-card">
+          <div>
+            <div class="vector-header">
+              <span class="vector-tag">VECTOR C // PURE CRAFT</span>
+              <h3 class="vector-title">The Design Vanguard</h3>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+              Positions the platform around bespoke aesthetic perfection, obsessing over typographic rigor, luxury finishes, and tactile design systems.
+            </p>
+          </div>
+          <div class="vector-tradeoff-box">
+            <strong>Sacrifice:</strong> Broad utilitarian mass-market appeal.<br>
+            <strong>Wins:</strong> Fierce cult brand loyalty and designer advocacy.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: BRAND DNA MATRIX -->
+    <section class="dossier-section reveal">
+      <div class="dossier-header">
+        <div class="dossier-tag">03 — Unified State Model</div>
+        <h2 class="dossier-title">
+          Dynamic Brand DNA <br>
+          <span class="gradient-text">Signal Matrix.</span>
+        </h2>
+        <p class="dossier-desc">
+          NEXUS continuously computes a unified Brand DNA state model in real-time, tracking maturity from <em>Emerging</em> to <em>Defined</em> to <em>Refined</em> across 9 strategic dimensions.
+        </p>
+      </div>
+
+      <div class="dna-signals-matrix">
+        <div class="dna-signal-tile">
+          <div class="dna-signal-header">
+            <span class="dna-signal-name">01. Brand Essence</span>
+            <span class="dna-signal-stage">Stage 01</span>
+          </div>
+          <p class="dna-signal-desc">Core mission statement, product concept summary, and foundational purpose.</p>
+        </div>
+
+        <div class="dna-signal-tile">
+          <div class="dna-signal-header">
+            <span class="dna-signal-name">02. Target Audience</span>
+            <span class="dna-signal-stage">Stage 01</span>
+          </div>
+          <p class="dna-signal-desc">Primary demographic segment, urgent pain points, and psychological triggers.</p>
+        </div>
+
+        <div class="dna-signal-tile">
+          <div class="dna-signal-header">
+            <span class="dna-signal-name">03. Positioning</span>
+            <span class="dna-signal-stage">Stage 02</span>
+          </div>
+          <p class="dna-signal-desc">Selected market archetype, defensible value proposition, and competitive moat.</p>
+        </div>
+
+        <div class="dna-signal-tile">
+          <div class="dna-signal-header">
+            <span class="dna-signal-name">04. Value Promise</span>
+            <span class="dna-signal-stage">Stage 03</span>
+          </div>
+          <p class="dna-signal-desc">Primary customer benefit and verifiable proof-of-work commitments.</p>
+        </div>
+
+        <div class="dna-signal-tile">
+          <div class="dna-signal-header">
+            <span class="dna-signal-name">05. Personality</span>
+            <span class="dna-signal-stage">Stage 04</span>
+          </div>
+          <p class="dna-signal-desc">Primary and secondary archetypes, active behavioral traits, and traits to avoid.</p>
+        </div>
+
+        <div class="dna-signal-tile">
+          <div class="dna-signal-header">
+            <span class="dna-signal-name">06. Brand Voice</span>
+            <span class="dna-signal-stage">Stage 04</span>
+          </div>
+          <p class="dna-signal-desc">Tone attributes, narrative style, proprietary vocabulary, and forbidden taboo terms.</p>
+        </div>
+
+        <div class="dna-signal-tile">
+          <div class="dna-signal-header">
+            <span class="dna-signal-name">07. Competitive Moat</span>
+            <span class="dna-signal-stage">Stage 03 &amp; 07</span>
+          </div>
+          <p class="dna-signal-desc">Defensible strategic differentiators that cannot be easily copied by incumbents.</p>
+        </div>
+
+        <div class="dna-signal-tile">
+          <div class="dna-signal-header">
+            <span class="dna-signal-name">08. Visual Direction</span>
+            <span class="dna-signal-stage">Stage 05</span>
+          </div>
+          <p class="dna-signal-desc">Aesthetic thesis, tokenized color palettes, typography pairings, and imagery rules.</p>
+        </div>
+
+        <div class="dna-signal-tile">
+          <div class="dna-signal-header">
+            <span class="dna-signal-name">09. Guardian Alignment</span>
+            <span class="dna-signal-stage">Stage 06</span>
+          </div>
+          <p class="dna-signal-desc">Mathematical integrity audit score verifying zero drift across strategy and execution.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: WHY THIS (EXPLAINABLE AI) -->
+    <section class="dossier-section reveal">
+      <div class="dossier-header">
+        <div class="dossier-tag">04 — Explainable AI (XAI)</div>
+        <h2 class="dossier-title">
+          &ldquo;Why This&rdquo; <br>
+          <span class="gradient-text">Decision Architecture.</span>
+        </h2>
+        <p class="dossier-desc">
+          Every critical decision in NEXUS features an interactive inspection trigger that transparently reveals the strategic rationale, inputs considered, trade-offs made, and alternative directions dismissed.
+        </p>
+      </div>
+
+      <div class="principles-grid">
+        <div class="glass-card cyber-card principle-card">
+          <div class="principle-num">// TRANSPARENCY 01</div>
+          <h3 class="principle-title">Inputs Considered</h3>
+          <p class="principle-desc">
+            Explicitly traces which audience pain points, positioning trade-offs, or voice rules directly influenced the generated naming candidate or visual brief.
+          </p>
+        </div>
+
+        <div class="glass-card cyber-card principle-card">
+          <div class="principle-num">// TRANSPARENCY 02</div>
+          <h3 class="principle-title">Strategic Rationale</h3>
+          <p class="principle-desc">
+            Provides multi-paragraph executive reasoning justifying why a specific color mood or archetype best reinforces the brand's long-term competitive moat.
+          </p>
+        </div>
+
+        <div class="glass-card cyber-card principle-card">
+          <div class="principle-num">// TRANSPARENCY 03</div>
+          <h3 class="principle-title">Sacrificed Trade-offs</h3>
+          <p class="principle-desc">
+            Surfaces what the strategy explicitly gives up in exchange for distinct market positioning, preventing brands from falling into generic middle-ground traps.
+          </p>
+        </div>
+
+        <div class="glass-card cyber-card principle-card">
+          <div class="principle-num">// TRANSPARENCY 04</div>
+          <h3 class="principle-title">Cliché &amp; Risk Warnings</h3>
+          <p class="principle-desc">
+            Flags overused industry tropes, trademark risks, or audience perception hazards before naming and launch assets are finalized.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: AI ARCHITECTURE & RESILIENCE -->
+    <section class="dossier-section reveal">
+      <div class="dossier-header">
+        <div class="dossier-tag">05 — Infrastructure &amp; Resilience</div>
+        <h2 class="dossier-title">
+          Dual-Provider Router &amp; <br>
+          <span class="gradient-text">Automatic Failover Engine.</span>
+        </h2>
+        <p class="dossier-desc">
+          To ensure mission-critical reliability during high traffic or vendor outages, NEXUS routes requests through an intelligent multi-provider engine with runtime schema validation and instant failover.
+        </p>
+      </div>
+
+      <div class="glass-card cyber-card arch-diagram-card">
+        <div class="arch-flow-row">
+          <div class="arch-node">
+            <span>User</span>
+            <span class="text-dim">Input</span>
+          </div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">
+            <span>NEXUS UI</span>
+            <span class="text-dim">React 19</span>
+          </div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">
+            <span>Service Adapter</span>
+            <span class="text-dim">Typed Client</span>
+          </div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">
+            <span>API Route</span>
+            <span class="text-dim">/api/ai/*</span>
+          </div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node primary-ai">
+            <span>Gemini 2.5</span>
+            <span class="text-dim">Primary Model</span>
+          </div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">
+            <span>Schema Validator</span>
+            <span class="text-dim">Strict JSON</span>
+          </div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node failover-ai">
+            <span>Groq Backup</span>
+            <span class="text-dim">Failover LLM</span>
+          </div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">
+            <span>Brand State</span>
+            <span class="text-dim">localStorage</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-subtle); font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+          <strong>Resilience Invariants:</strong> Primary generation executes via Google Gemini. If Gemini encounters rate limits (429), high demand (503), or network timeouts, the router executes exponential backoff retries. If primary retries fail, the system automatically and transparently fails over to Groq (<code class="font-mono">llama-3.3-70b-versatile</code>). All responses are verified against strict TypeScript runtime validators before updating client state. Full cancellation is supported via native <code class="font-mono">AbortController</code>.
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: ADDITIONAL SUBSYSTEMS -->
+    <section class="dossier-section reveal">
+      <div class="dossier-header">
+        <div class="dossier-tag">06 — Subsystems &amp; Tooling</div>
+        <h2 class="dossier-title">
+          Three Deep <br>
+          <span class="gradient-text">Subsystem Implementations.</span>
+        </h2>
+      </div>
+
+      <div class="principles-grid">
+        <div class="glass-card cyber-card principle-card">
+          <div class="principle-num">// SUBSYSTEM 01</div>
+          <h3 class="principle-title">Web Speech Audio Narration</h3>
+          <p class="principle-desc">
+            Integrated global speech synthesizer (<code class="font-mono">speech-manager.ts</code>) using the browser's native Web Speech API. Narrates AI-generated elevator pitches, brand voices, and critiques with synchronized audio play/pause controls.
+          </p>
+        </div>
+
+        <div class="glass-card cyber-card principle-card">
+          <div class="principle-num">// SUBSYSTEM 02</div>
+          <h3 class="principle-title">Zero-Loss Local Persistence</h3>
+          <p class="principle-desc">
+            All 7 stages, locked strategic vectors, and custom form inputs persist in real-time to <code class="font-mono">localStorage</code> (<code class="font-mono">nexus_brand_project_v1</code>), ensuring users never lose work across browser restarts or tab reloads.
+          </p>
+        </div>
+
+        <div class="glass-card cyber-card principle-card" style="grid-column: 1 / -1;">
+          <div class="principle-num">// SUBSYSTEM 03</div>
+          <h3 class="principle-title">Aether OS Reference Project</h3>
+          <p class="principle-desc">
+            Ships with a complete, pre-computed reference case study (<em>Aether OS — Cognitive Computing</em>). Allows founders and judges to instantly explore the entire 7-stage output pipeline without consuming AI API credits.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: ENGINEERING STACK & ENDPOINTS -->
+    <section class="dossier-section reveal">
+      <div class="dossier-header">
+        <div class="dossier-tag">07 — Technical Inventory</div>
+        <h2 class="dossier-title">
+          Engineering Stack &amp; <br>
+          <span class="gradient-text">API Route Endpoints.</span>
+        </h2>
+      </div>
+
+      <div class="tech-endpoints-grid">
+        <div class="endpoint-card">
+          <span class="endpoint-route">POST /api/ai/discover</span>
+          <span class="endpoint-tag">Stage 1 · Gemini</span>
+        </div>
+        <div class="endpoint-card">
+          <span class="endpoint-route">POST /api/ai/position</span>
+          <span class="endpoint-tag">Stage 2 · Gemini</span>
+        </div>
+        <div class="endpoint-card">
+          <span class="endpoint-route">POST /api/ai/shape</span>
+          <span class="endpoint-tag">Stage 4 · Gemini</span>
+        </div>
+        <div class="endpoint-card">
+          <span class="endpoint-route">POST /api/ai/visualize</span>
+          <span class="endpoint-tag">Stage 5 · Gemini</span>
+        </div>
+        <div class="endpoint-card">
+          <span class="endpoint-route">POST /api/ai/guardian</span>
+          <span class="endpoint-tag">Stage 6 · Gemini</span>
+        </div>
+        <div class="endpoint-card">
+          <span class="endpoint-route">POST /api/ai/launch</span>
+          <span class="endpoint-tag">Stage 7 · Gemini</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: FUTURE ROADMAP -->
+    <section class="dossier-section reveal">
+      <div class="dossier-header">
+        <div class="dossier-tag">08 — Next Horizon</div>
+        <h2 class="dossier-title">
+          NEXUS // <br>
+          <span class="gradient-text">Next Horizon Roadmap.</span>
+        </h2>
+        <p class="dossier-desc">
+          Planned extensions currently specified for future development cycles.
+        </p>
+      </div>
+
+      <div class="principles-grid">
+        <div class="glass-card cyber-card principle-card">
+          <div class="principle-num">HORIZON // 01</div>
+          <h3 class="principle-title">Multi-Project Workspaces</h3>
+          <p class="principle-desc">Multi-tenant cloud databases with project switching, team sharing, and version history.</p>
+        </div>
+
+        <div class="glass-card cyber-card principle-card">
+          <div class="principle-num">HORIZON // 02</div>
+          <h3 class="principle-title">Vector Brand Memory</h3>
+          <p class="principle-desc">Embeddings-based semantic search querying previous brand decisions and past campaigns.</p>
+        </div>
+
+        <div class="glass-card cyber-card principle-card">
+          <div class="principle-num">HORIZON // 03</div>
+          <h3 class="principle-title">Direct Figma Token Exporter</h3>
+          <p class="principle-desc">Automated Figma plugin exporting generated color palettes and typography tokens directly into design files.</p>
+        </div>
+
+        <div class="glass-card cyber-card principle-card">
+          <div class="principle-num">HORIZON // 04</div>
+          <h3 class="principle-title">Autonomous Image Generation</h3>
+          <p class="principle-desc">Integrated Imagen 3 and FLUX endpoints rendering bespoke logo concepts and visual mood boards.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: FINAL CTA -->
+    <section class="reveal">
+      <div class="glass-card cyber-card project-cta-banner">
+        <h2 class="cta-banner-title">
+          Enter the <span class="gradient-text">Pipeline.</span>
+        </h2>
+        <p class="cta-banner-sub">
+          Synthesize your next product's brand strategy, identity, and launch kit with NEXUS AI.
+        </p>
+        <div class="cta-banner-actions">
+          <a href="https://nexus-ai.muzguy.in" target="_blank" rel="noopener noreferrer" class="btn-primary-launch">
+            <span>Launch NEXUS Studio</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
+          <a href="../../#projects" class="btn-secondary-source">
+            <span>← Back to Overview</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       THEME SWITCHER DOCK & FOOTER
+  ========================================================= -->
+  <div class="atmosphere-dock" id="atmoDock" role="toolbar" aria-label="Visual Theme Switcher">
+    <span class="atmo-label">Theme</span>
+    <button class="atmo-btn active" data-theme="webgl" data-mode="webgl" title="Cyber Cyan Futuristic Theme">
+      <span>🌌 WebGL</span>
+    </button>
+    <button class="atmo-btn" data-theme="desert" data-mode="desert" title="Warm Amber Desert Theme">
+      <span>🏜️ Desert</span>
+    </button>
+    <button class="atmo-btn" data-theme="driveby" data-mode="driveby" title="Cinematic Crimson Driveby Theme">
+      <span>🏎️ Driveby</span>
+    </button>
+    <button class="atmo-btn" data-theme="flow" data-mode="flow" title="Emerald Green Flow Theme">
+      <span>🌿 Flow</span>
+    </button>
+  </div>
+
+  <footer>
+    <div class="container footer-content">
+      <div>
+        © 2026 Rohit · <a href="../../" style="color: inherit; text-decoration: none;" class="footer-coords">muzguy.in</a>
+      </div>
+      <div>
+        NEXUS Case Study Dossier · Engineered with Vanilla Web Tech.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="../../js/webgl-background.js"></script>
+  <script src="../../js/cursor.js"></script>
+  <script src="../../js/tilt.js"></script>
+  <script src="../../js/smooth-scroll.js"></script>
+  <script src="../../js/main.js"></script>
+</body>
+</html>

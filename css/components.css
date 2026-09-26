@@ -796,24 +796,35 @@ body.cursor-hover-card #custom-cursor-dot {
 .project-links {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px 16px;
+  flex-wrap: wrap;
 }
 
 .project-action-link {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 600;
-  color: var(--text-main);
+  color: var(--text-muted);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding: 4px 0;
   transition: color 0.2s ease, gap 0.2s ease;
 }
 
 .project-action-link:hover {
+  color: var(--text-main);
+  gap: 8px;
+}
+
+.project-action-link.primary-action {
   color: var(--accent-primary);
-  gap: 10px;
+}
+
+.project-action-link.primary-action:hover {
+  color: var(--accent-primary);
+  filter: brightness(1.15);
 }
 
 /* =========================================================
