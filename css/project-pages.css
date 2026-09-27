@@ -635,6 +635,311 @@
   line-height: 1.6;
 }
 
+/* =========================================================
+   NEXUS LIVE DEMO VIDEO SHOWCASE
+========================================================= */
+.nexus-demo-section {
+  position: relative;
+}
+
+.nexus-video-showcase {
+  width: 100%;
+}
+
+.nexus-video-glass-card {
+  padding: 24px;
+  border-radius: 22px;
+  background: var(--bg-surface);
+  backdrop-filter: var(--glass-blur) saturate(170%);
+  -webkit-backdrop-filter: var(--glass-blur) saturate(170%);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    0 0 35px var(--accent-glow);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+.nexus-video-glass-card:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.55),
+    0 0 45px var(--accent-glow),
+    0 0 20px var(--accent-glow-secondary);
+}
+
+/* Ambient Top Light Line */
+.nexus-video-glass-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Top HUD Control Bar */
+.nexus-video-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.nexus-video-status-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nexus-video-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.v-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.85;
+}
+
+.v-dot-red {
+  background: #ef4444;
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.45);
+}
+
+.v-dot-amber {
+  background: #f59e0b;
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.45);
+}
+
+.v-dot-green {
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.45);
+}
+
+.nexus-video-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  background: var(--accent-badge-bg);
+  border: 1px solid var(--accent-badge-border);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.v-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  position: relative;
+  box-shadow: 0 0 8px var(--accent-primary);
+}
+
+.v-pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-primary);
+  animation: radarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.nexus-video-direct-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.2s ease;
+}
+
+.nexus-video-direct-link:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--accent-glow);
+  transform: translateY(-1px);
+}
+
+/* 16:9 Presentation Frame */
+.nexus-video-frame-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000000;
+  border: 1px solid var(--border-subtle);
+  box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.65);
+}
+
+.nexus-video-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* Bottom HUD Metadata / Fallback Bar */
+.nexus-video-bottombar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+}
+
+.nexus-video-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.nexus-video-meta-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--accent-primary);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.nexus-video-meta-title {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.nexus-video-fallback-btn {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  background: var(--accent-badge-bg);
+  border: 1px solid var(--accent-badge-border);
+  padding: 8px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.nexus-video-fallback-btn:hover {
+  color: #030307;
+  background: var(--accent-primary);
+  box-shadow: 0 0 20px var(--accent-glow);
+  transform: translateY(-1px);
+}
+
+/* Light Mode Overrides */
+[data-mode="light"] .nexus-video-glass-card {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(15, 23, 42, 0.16);
+  box-shadow: 
+    0 18px 45px rgba(15, 23, 42, 0.08),
+    0 0 25px var(--accent-glow);
+}
+
+[data-mode="light"] .nexus-video-glass-card:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 
+    0 22px 55px rgba(15, 23, 42, 0.12),
+    0 0 35px var(--accent-glow);
+}
+
+[data-mode="light"] .nexus-video-direct-link {
+  background: rgba(15, 23, 42, 0.03);
+  border-color: rgba(15, 23, 42, 0.12);
+  color: var(--text-muted);
+}
+
+[data-mode="light"] .nexus-video-direct-link:hover {
+  color: var(--accent-primary);
+  background: rgba(15, 23, 42, 0.06);
+  border-color: var(--accent-primary);
+}
+
+[data-mode="light"] .nexus-video-meta-title {
+  color: #1e293b;
+  font-weight: 600;
+}
+
+[data-mode="light"] .nexus-video-fallback-btn:hover {
+  color: #ffffff;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  .nexus-video-glass-card {
+    padding: 14px;
+    border-radius: 18px;
+  }
+  .nexus-video-frame-wrap {
+    border-radius: 10px;
+  }
+  .nexus-video-topbar {
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .nexus-video-bottombar {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+}
+
+@media (max-width: 540px) {
+  .nexus-video-topbar {
+    justify-content: space-between;
+  }
+  .nexus-video-direct-link {
+    display: none;
+  }
+  .nexus-video-bottombar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .nexus-video-fallback-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 16px;
+    box-sizing: border-box;
+  }
+}
+
 /* --- NEXUS 7-Stage Pipeline Visualizer --- */
 .nexus-pipeline-list {
   display: flex;
