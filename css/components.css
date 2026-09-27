@@ -486,6 +486,10 @@ body.cursor-hover-card #custom-cursor-dot {
 }
 
 .hero-badge-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
   margin-bottom: 28px;
 }
 
@@ -497,11 +501,67 @@ body.cursor-hover-card #custom-cursor-dot {
   border-radius: 40px;
   background: var(--accent-badge-bg);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--accent-badge-border);
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--text-main);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.hero-ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 40px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  text-decoration: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-ai-badge:hover {
+  background: var(--accent-badge-bg);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px var(--accent-glow);
+  color: var(--text-main);
+}
+
+.ai-sparkle-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  box-shadow: 0 0 8px var(--accent-primary);
+  position: relative;
+}
+
+.ai-sparkle-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-primary);
+  animation: radarPing 2.2s infinite;
+}
+
+.nav-ai-link {
+  color: var(--accent-primary) !important;
+  font-weight: 600;
+}
+
+.drawer-ai-link {
+  color: var(--accent-primary) !important;
+  font-weight: 700;
 }
 
 .hero-title {
@@ -1482,6 +1542,21 @@ footer {
 [data-mode="light"] .hero-badge .status-dot {
   background: #059669;
   box-shadow: 0 0 10px rgba(5, 150, 105, 0.6);
+}
+
+[data-mode="light"] .hero-ai-badge {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(15, 23, 42, 0.18);
+  color: var(--accent-primary);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 4px 15px rgba(15, 23, 42, 0.05);
+}
+
+[data-mode="light"] .hero-ai-badge:hover {
+  background: var(--accent-badge-bg);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
 }
 
 [data-mode="light"] .hero-title {

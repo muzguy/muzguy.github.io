@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="webgl" data-mode="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="MuzAI — Personal Portfolio Intelligence Layer trained on Rohit's projects, technical architectures, skills, and current builds.">
+  <meta name="theme-color" content="#030307">
+  
+  <title>MuzAI // Personal Portfolio Intelligence | muzguy</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+  <!-- Instant Theme & Mode Pre-hydration (Prevents FOUT) -->
+  <script>
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem('muzguy_theme');
+        if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+        const savedMode = localStorage.getItem('muzguy_mode');
+        if (savedMode) document.documentElement.setAttribute('data-mode', savedMode);
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Modern Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/glass.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/project-pages.css">
+  <link rel="stylesheet" href="../css/muzai.css">
+</head>
+
+<body>
+  <!-- Custom Dual-Stage Cursor -->
+  <div id="custom-cursor-dot"></div>
+  <div id="custom-cursor-ring">
+    <span class="cursor-label">ASK</span>
+  </div>
+
+  <!-- Cinematic Cosmic Background Layers -->
+  <div class="cosmic-stars-layer stars-deep" aria-hidden="true"></div>
+  <div class="cosmic-stars-layer stars-mid" aria-hidden="true"></div>
+  <div class="cosmic-meteor" aria-hidden="true"></div>
+
+  <!-- Interactive Three.js WebGL Particle Constellation -->
+  <div id="bg-canvas-container">
+    <canvas id="three-canvas"></canvas>
+  </div>
+
+  <!-- Gradient Vignette & Cyber Grid Ground -->
+  <div class="video-overlay" aria-hidden="true"></div>
+  <div class="cyber-grid" aria-hidden="true"></div>
+
+  <!-- Ambient Floating Glow Orbs -->
+  <div class="ambient-glow primary" aria-hidden="true"></div>
+  <div class="ambient-glow secondary" aria-hidden="true"></div>
+  <div class="ambient-glow accent" aria-hidden="true"></div>
+
+  <!-- Tactile Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- =========================================================
+       PROJECT HUD NAVBAR
+  ========================================================= -->
+  <div class="project-navbar-wrapper">
+    <nav class="project-navbar" id="hudNav">
+      <div class="project-nav-left">
+        <a href="../" class="project-nav-brand">
+          <span>muz</span>guy.
+        </a>
+        <div class="project-breadcrumbs">
+          <span>intelligence</span>
+          <span class="breadcrumb-sep">//</span>
+          <span class="breadcrumb-active">muzai</span>
+        </div>
+      </div>
+
+      <div class="project-nav-actions">
+        <a href="../" class="nav-back-link" title="Return to Overview">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <span>Overview</span>
+        </a>
+
+        <!-- Audio SFX Toggle -->
+        <button class="audio-toggle-btn" id="audioToggle" aria-label="Toggle UI Sound Synthesis" title="Toggle Sound FX">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+        </button>
+
+        <!-- Light / Dark Mode Toggle -->
+        <button class="theme-mode-btn" id="themeModeToggle" aria-label="Toggle Display Mode" title="Toggle Light/Dark Mode">
+          <svg class="mode-icon icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="mode-icon icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+
+        <!-- Explore Projects CTA -->
+        <a href="../#projects" class="nav-launch-btn">
+          <span>Projects</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- =========================================================
+       MAIN MUZAI INTERFACE
+  ========================================================= -->
+  <div class="muzai-page-wrapper">
+    <main class="muzai-container">
+      
+      <!-- HERO HEADER -->
+      <section class="muzai-hero reveal">
+        <div class="muzai-badge-row">
+          <span class="muzai-status-pill">
+            <span class="pill-dot"></span>
+            MUZAI // v1.0
+          </span>
+          <span class="muzai-sec-pill">PERSONAL INTELLIGENCE LAYER</span>
+          <span class="muzai-sec-pill">ZERO API SECRETS</span>
+        </div>
+
+        <h1 class="muzai-hero-title">
+          Ask my portfolio <br>
+          <span class="gradient-text">anything.</span>
+        </h1>
+
+        <p class="muzai-hero-desc">
+          An AI interface trained on what I've built, what I'm building, and how I build it.
+        </p>
+      </section>
+
+      <!-- GLASS CONVERSATION TERMINAL -->
+      <div class="muzai-terminal-card cyber-card reveal reveal-delay-1" id="muzaiTerminal">
+        
+        <!-- Terminal Top Bar -->
+        <div class="terminal-hud-header">
+          <div class="terminal-title-group">
+            <div class="terminal-dots" aria-hidden="true">
+              <span class="t-dot t-dot-red"></span>
+              <span class="t-dot t-dot-amber"></span>
+              <span class="t-dot t-dot-green"></span>
+            </div>
+            <span class="terminal-sys-name">MUZAI TERMINAL</span>
+            <span class="terminal-sys-tag">// v1.0-LOCAL</span>
+          </div>
+
+          <div class="terminal-hud-controls">
+            <span class="terminal-mode-badge">● LOCAL ENGINE</span>
+            <button type="button" class="btn-clear-chat" id="clearChatBtn" title="Reset conversation">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              <span>Reset</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Messages Area -->
+        <div class="terminal-chat-viewport" id="chatMessages" role="log" aria-live="polite">
+          <!-- Messages will be injected here via JavaScript -->
+        </div>
+
+        <!-- Suggested Questions Tray -->
+        <div class="suggestions-wrapper">
+          <span class="suggestions-label">// Suggested Inquiries</span>
+          <div class="suggestions-tray" id="quickSuggestions">
+            <!-- Suggestion chips injected by JS -->
+          </div>
+        </div>
+
+        <!-- Input Dock -->
+        <div class="terminal-input-dock">
+          <div class="input-bar-wrap">
+            <textarea 
+              id="chatInput" 
+              class="chat-textarea" 
+              rows="1" 
+              placeholder="Ask MuzAI anything about Rohit, NEXUS, or ASAPTools..."
+              aria-label="Ask MuzAI a question"></textarea>
+
+            <button type="button" id="sendBtn" class="btn-send" aria-label="Send query" title="Send (Enter)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
+
+          <div class="input-hints-row">
+            <span>[Enter] to send · [Shift+Enter] for newline</span>
+            <span>Trained strictly on verified portfolio knowledge</span>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- =========================================================
+         THEME SWITCHER DOCK & FOOTER
+    ========================================================= -->
+    <div class="atmosphere-dock" id="atmoDock" role="toolbar" aria-label="Visual Theme Switcher">
+      <span class="atmo-label">Theme</span>
+      <button class="atmo-btn active" data-theme="webgl" data-mode="webgl" title="Cyber Cyan Futuristic Theme">
+        <span>🌌 WebGL</span>
+      </button>
+      <button class="atmo-btn" data-theme="desert" data-mode="desert" title="Warm Amber Desert Theme">
+        <span>🏜️ Desert</span>
+      </button>
+      <button class="atmo-btn" data-theme="driveby" data-mode="driveby" title="Cinematic Crimson Driveby Theme">
+        <span>🏎️ Driveby</span>
+      </button>
+      <button class="atmo-btn" data-theme="flow" data-mode="flow" title="Emerald Green Flow Theme">
+        <span>🌿 Flow</span>
+      </button>
+    </div>
+
+    <footer>
+      <div class="container footer-content">
+        <div>
+          © 2026 Rohit · <a href="../" style="color: inherit; text-decoration: none;" class="footer-coords">muzguy.in</a>
+        </div>
+        <div>
+          MuzAI Personal Intelligence Layer · Engineered with Vanilla Web Tech.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="../js/webgl-background.js"></script>
+  <script src="../js/cursor.js"></script>
+  <script src="../js/tilt.js"></script>
+  <script src="../js/smooth-scroll.js"></script>
+  <script src="../js/main.js"></script>
+
+  <!-- MuzAI Intelligence Engine & UI Controller -->
+  <script src="data/knowledge.js"></script>
+  <script src="js/muzai-engine.js"></script>
+  <script src="js/muzai-ui.js"></script>
+</body>
+</html>
